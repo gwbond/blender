@@ -19,6 +19,13 @@
 # keys whose name matches an armature bone name. Drivers will not be
 # created for shape keys that already have drivers.
 
+# BUGS/ENHANCEMENTS: Feel free report bugs, suggest enhancements or,
+# even better, contribute changes to the code. It's hosted on github
+# at:
+# https://github.com/gwbond/blender/blob/master/Brekel-Kinect-Face-Pro-2-Drivers-Add-On/animation_create_brekel_drivers.py
+
+# LICENSE: GPL v2 or later
+
 bl_info = {
     "name": "Create Brekel Kinect Face Pro 2 Drivers",
     "version": (1, 0),
