@@ -3,9 +3,18 @@
 # bones to mesh shape keys. Each driver maps an armature bone rotation
 # to a shape key value between 0.0 and 1.0.
 
+# COMPATABILITY: Test with Blender v2.72
+
+# DOWNLOAD: Go to:
+# https://github.com/gwbond/blender/blob/master/Brekel-Kinect-Face-Pro-2-Drivers-Add-On/animation_create_brekel_drivers.py
+# and right-click on the 'Raw' button and select 'Save link as...' to
+# download the file to your PC/Mac/Linux machine. Save the file as
+# "animation_create_brekel_drivers.py"
+
 # INSTALLATION: Install this add-on the usual way via User Preferences
-# Addons "Install from File". This add-on is listed as "Create Brekel
-# Kinect Face Pro 2 Drivers" in the "Animation" category.
+# Addons "Install from File". Select the file you downloaded in the
+# previous step. Once installed, this add-on is listed as "Create
+# Brekel Kinect Face Pro 2 Drivers" in the "Animation" category.
 
 # USAGE: Before using this add-on, import a Brekel Kinect Fact Pro 2
 # BVH motion capture file. This will create an armature object. To use
