@@ -16,7 +16,7 @@
 # previous step. Once installed, this add-on is listed as "Create
 # Brekel Kinect Face Pro 2 Drivers" in the "Animation" category.
 
-# USAGE: Before using this add-on, import a Brekel Kinect Fact Pro 2
+# USAGE: Before using this add-on, import a Brekel Kinect Face Pro 2
 # BVH motion capture file. This will create an armature object. To use
 # this add-on, in object mode, select a mesh object with shape keys
 # you want to create Brekel drivers for (or shift-select multiple mesh
@@ -111,23 +111,41 @@ class CreateBrekelDrivers( bpy.types.Operator ):
                              driver_add( 'value' )
                 new_driver.extrapolation = 'LINEAR'
 
-                # Add two no-op FCurve keyframes at min (0 rad = 0
-                # degrees) and max (1.7433 rad = 100 degrees) shape
-                # key values in case keyrame control is desired at
-                # some later time.
-                new_driver.keyframe_points.add( 2 )
-                # Keyframe at min value 0.0 radians / 0.0 degrees.
+                # Brekel armature encodes shape key values as bone
+                # X-axis rotations between 0 and 100 degrees. Blender
+                # drivers, however, interpret rotation value in
+                # radians so the driver uses an interpolation curve to
+                # map input value in interval [ 0, 1.7433 ] radians to
+                # shape key value in interval [ 0, 1 ].
+
+                # Add three no-op Bezier interpolation keyframes at
+                # min (0 rad = 0 degrees), mid (0.8727 rad = 50
+                # degrees), and max (1.7433 rad = 100 degrees) shape
+                # key values in case interpolation control is
+                # desired. NOTE: To view and manipulate keyframes,
+                # select a driver in the "Graph Editor" "Drivers"
+                # window, and either "mute" or delete any driver
+                # modifiers that appear at the bottom of the driver
+                # properties window.
+                new_driver.keyframe_points.add( 3 )
+                # Keyframe at min value 0.0 radians.
                 new_driver.keyframe_points[0].co = ( 0.0, 0.0 )
                 new_driver.keyframe_points[0].handle_right_type = 'VECTOR'
                 new_driver.keyframe_points[0].handle_left_type = 'VECTOR'
-                new_driver.keyframe_points[0].handle_left = ( -0.333, -0.333 )
-                new_driver.keyframe_points[0].handle_right = ( 0.333, 0.333 )
-                # Keyframe at max value 1.74533 radians / 100 degrees.
-                new_driver.keyframe_points[1].co = ( 1.74533, 1.74533 )
+                new_driver.keyframe_points[0].handle_left = ( -0.349, -0.2 )
+                new_driver.keyframe_points[0].handle_right = ( 0.349, 0.2 )
+                # Keyframe at mid value 0.872665 radians.
+                new_driver.keyframe_points[1].co = ( 0.872665, 0.5 )
                 new_driver.keyframe_points[1].handle_right_type = 'VECTOR'
                 new_driver.keyframe_points[1].handle_left_type = 'VECTOR'
-                new_driver.keyframe_points[1].handle_left = ( 1.412, 1.412 )
-                new_driver.keyframe_points[1].handle_right = ( 2.079, 2.079 )
+                new_driver.keyframe_points[1].handle_left = ( 0.524, 0.3 )
+                new_driver.keyframe_points[1].handle_right = ( 1.222, 0.7 )
+                # Keyframe at max value 1.74533 radians.
+                new_driver.keyframe_points[2].co = ( 1.74533, 1.0 )
+                new_driver.keyframe_points[2].handle_right_type = 'VECTOR'
+                new_driver.keyframe_points[2].handle_left_type = 'VECTOR'
+                new_driver.keyframe_points[2].handle_left = ( 1.396, 0.8 )
+                new_driver.keyframe_points[2].handle_right = ( 2.094, 1.2 )
 
                 # Link driver to bone rotation.
                 new_driver.driver.type = 'AVERAGE'
@@ -137,18 +155,6 @@ class CreateBrekelDrivers( bpy.types.Operator ):
                 new_variable.targets[0].bone_target = bone.name
                 new_variable.targets[0].transform_space = 'LOCAL_SPACE'
                 new_variable.targets[0].transform_type = 'ROT_X'
-
-                # Brekel armature encodes shape key values as bone
-                # X-axis rotations between 0 and 100 degrees. Blender
-                # drivers, however, interpret rotation value in
-                # radians so the driver requires a modifier to
-                # translate radian value back to degrees.
-
-                # Convert from radians to degrees, normalized to
-                # interval [0.0, 1.0].
-
-                # ( 180 degrees / Pi radians ) / 100
-                new_driver.modifiers[0].coefficients[1] = 0.5729578137397766
 
             driver_counts.append( ( mesh, driver_count ) )
 
