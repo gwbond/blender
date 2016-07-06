@@ -1,9 +1,10 @@
 
-# SUMMARY: Creates drivers to link a Brekel Kinect Face Pro 2 armature
-# bones to mesh shape keys. Each driver maps an armature bone rotation
-# to a shape key value between 0.0 and 1.0.
+# SUMMARY: Uses an imported BVH from Brekel Kinect Face Pro 2 to
+# create drivers to link a armature bones to mesh shape keys. Each
+# driver maps an armature bone rotation to a shape key value between
+# 0.0 and 1.0.
 
-# COMPATABILITY: Tested with Blender v2.72
+# COMPATABILITY: Tested with Blender v2.72 and v2.77a
 
 # DOWNLOAD: Go to:
 # https://github.com/gwbond/blender/blob/master/Brekel-Kinect-Face-Pro-2-Drivers-Add-On/animation_create_brekel_drivers.py
@@ -146,6 +147,12 @@ class CreateBrekelDrivers( bpy.types.Operator ):
                 new_driver.keyframe_points[2].handle_left_type = 'VECTOR'
                 new_driver.keyframe_points[2].handle_left = ( 1.396, 0.8 )
                 new_driver.keyframe_points[2].handle_right = ( 2.094, 1.2 )
+
+                # Remove any default modifiers that may have been
+                # added to the driver because they will override the
+                # interpolation keyframes added above.
+                for modifier in new_driver.modifiers:
+                    new_driver.modifiers.remove(modifier)
 
                 # Link driver to bone rotation.
                 new_driver.driver.type = 'AVERAGE'
