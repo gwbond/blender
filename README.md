@@ -10,10 +10,7 @@ armature bones to mesh shape keys. Each driver maps an armature bone
 rotation to a shape key value between 0.0 and 1.0.
 
 For each driver, adds three no-op Bezier interpolation keyframes in
-case interpolation control is desired. NOTE: To view and manipulate
-keyframes, select a driver in the "Graph Editor" "Drivers" window, and
-either "mute" or delete any driver modifiers that appear at the bottom
-of the driver properties window.
+case interpolation control is desired.
 
 ## Brekel-Kinect-Face-Pro-2-FBX-Action-Add-On
 
