@@ -77,9 +77,14 @@ class CreateBrekelDrivers( bpy.types.Operator ):
                              "Selected mesh object does not contain shape keys.: %s" % mesh.name )
                 return { 'CANCELLED' }
 
+        # Set rotation mode for armature bones to use same mode that
+        # Brekel BVH armature bone animation does: Euler ZXY
+        brekel_armature = context.active_object
+        for pose_bone in brekel_armature.pose.bones:
+            pose_bone.rotation_mode = 'ZXY'
+        
         # Adding drivers.
 
-        brekel_armature = context.active_object
         driver_counts = []
 
         for mesh in meshes :
